@@ -1,0 +1,27 @@
+# .github/workflows/deploy.yml
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - run: |
+          gcloud run deploy storm-track-api \
+            --source . \
+            --region southamerica-east1 \
+            --allow-unauthenticated \
+            --max-instances 3 \
+            --set-env-vars OPEN_METEO_BASE_URL=https://api.open-meteo.com/v1,OPEN_METEO_MARINE_URL=https://marine-api.open-meteo.com/v1
