@@ -18,9 +18,9 @@ async def geocode(request: Request, name: str):
         raise HTTPException(status_code=502, detail=str(exc))
 
 
-@router.get("/previsao")
+@router.get("/forecast")
 @limiter.limit(settings.rate_limit_default)
-async def previsao(request: Request, lat: float, lon: float):
+async def forecast(request: Request, lat: float, lon: float):
     try:
         return await open_meteo_service.get_forecast(lat, lon)
     except Exception as exc:
