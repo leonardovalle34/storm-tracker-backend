@@ -3,11 +3,11 @@ from app.config import settings
 
 class NominatimService:
     def __init__(self) -> None:
-        self._client = httpx.AsyncClient(timeout=10.0, headers={"User-Agent" : settings.NOMINATIM_USER_AGENT})
+        self._client = httpx.AsyncClient(timeout=10.0, headers={"User-Agent" : settings.nominatim_user_agent})
 
     async def geocode(self, name:str , limit:int = 8) -> list[dict]:
         response = await self._client.get(
-            settings.NOMINATIM_URL,
+            settings.nominatim_url,
             params={
                 "q": name,
                 "format": "json",

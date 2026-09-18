@@ -5,14 +5,6 @@ class OpenMeteoService:
     def __init__(self) -> None:
         self._client = httpx.AsyncClient(timeout=10.0)
 
-    async def geocode(self, name: str, count: int = 5) -> dict:
-        response = await self._client.get(
-            f"{settings.open_meteo_geocoding_url}/search",
-            params={"name" : name, "count" : count , "language": "pt"},
-        )
-        response.raise_for_status()
-        return response.json()
-
     async def get_forecast(self, lat: float, lon: float, days: int = 16) -> dict:
         response = await self._client.get(
             f"{settings.open_meteo_base_url}/forecast",
