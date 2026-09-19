@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Request
-
+from datetime import date as date_cls
+from app.services.astronomy import astronomy_service
 from app.config import settings
 from app.core.limiter import limiter
 from app.services.open_meteo import open_meteo_service
@@ -34,3 +35,9 @@ async def marine(request: Request, lat: float, lon: float):
         return await open_meteo_service.get_marine(lat, lon)
     except Exception as exc:
         raise HTTPException(status_code=502, detail=str(exc))
+
+@router.get("/moon-phase")
+@limiter.limit(settings.rate_limit_default)
+async def moon_phase(request: Request, target_date: str | None = None):
+    parsed = date_cls.fromisoformat(target_date) if target_date else None
+    return astronomy_service.get_moon_phase(parsed)

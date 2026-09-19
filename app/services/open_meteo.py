@@ -12,7 +12,7 @@ class OpenMeteoService:
                 "latitude": lat,
                 "longitude": lon,
                 "hourly":"temperature_2m,precipitation,wind_speed_10m,wind_direction_10m",
-                "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+                "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum,uv_index_max,sunrise,sunset",
                 "timezone": "America/Sao_Paulo",
                 "forecast_days": days,
             },
@@ -26,7 +26,7 @@ class OpenMeteoService:
             params={
                 "latitude": lat,
                 "longitude": lon,
-                "hourly": "wave_height,swell_wave_height,swell_wave_direction,swell_wave_period",
+                "hourly": "wave_height,swell_wave_height,swell_wave_direction,swell_wave_period,sea_level_height_msl,sea_surface_temperature",
                 "timezone": "America/Sao_Paulo",
                 "forecast_days": days,
                 "models":"best_match"
