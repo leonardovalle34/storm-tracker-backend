@@ -16,6 +16,7 @@ class OpenMeteoService:
                 "timezone": "auto",
                 "wind_speed_unit": "kn",
                 "forecast_days": days,
+                "current": "temperature_2m,weather_code,wind_speed_10m"
             },
         )
         response.raise_for_status()
