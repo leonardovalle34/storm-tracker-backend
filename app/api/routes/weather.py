@@ -39,5 +39,8 @@ async def marine(request: Request, lat: float, lon: float):
 @router.get("/moon-phase")
 @limiter.limit(settings.rate_limit_default)
 async def moon_phase(request: Request, target_date: str | None = None):
-    parsed = date_cls.fromisoformat(target_date) if target_date else None
+    try:
+        parsed = date_cls.fromisoformat(target_date) if target_date else None
+    except ValueError:
+        raise HTTPException(status_code=400, detail="target_date deve estar no formato YYYY-MM-DD")
     return astronomy_service.get_moon_phase(parsed)
